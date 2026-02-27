@@ -1,0 +1,52 @@
+job: extension
+config:
+  name: ohwx_influencer
+  process:
+    - type: sd_trainer
+      training_folder: output/ohwx_influencer
+      device: mps
+      network:
+        type: lora
+        linear: 16
+        linear_alpha: 16
+      save:
+        dtype: float16
+        save_every: 250
+        max_step_saves_to_keep: 4
+      datasets:
+        - folder_path: /Users/hugo/Development/AI-INFLUENCER-ZARA/dataset
+          caption_ext: txt
+          caption_dropout_rate: 0.05
+          resolution:
+            - 512
+            - 768
+          batch_size: 1
+          num_workers: 0
+      train:
+        batch_size: 1
+        steps: 1500
+        disable_sampling: true
+        gradient_accumulation_steps: 1
+        train_unet: true
+        train_text_encoder: false
+        gradient_checkpointing: true
+        noise_scheduler: flowmatch
+        optimizer: adamw
+        lr: 4e-4
+        ema_config:
+          use_ema: true
+          ema_decay: 0.99
+        dtype: float16
+      model:
+        name_or_path: black-forest-labs/FLUX.1-dev
+        is_flux: true
+        quantize: false
+        low_vram: true
+      sample:
+        sampler: flowmatch
+        sample_every: 99999
+        width: 1024
+        height: 1024
+        prompts:
+          - "a photo of ohwx woman standing in a coffee shop, dark curly hair, olive skin, freckles, gold earrings"
+          - "a photo of ohwx woman at a beach sunset, dark curly hair, olive skin, freckles, gold necklace"
