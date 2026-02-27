@@ -20,18 +20,13 @@ if [ ! -d "$DATASET_PATH" ]; then
 fi
 echo "Using dataset: $DATASET_PATH"
 
-# Copy config and set dataset path (so /workspace/dataset or project dataset/ both work)
-mkdir -p "$TOOLKIT_DIR/config"
-CONFIG_OUT="$TOOLKIT_DIR/config/$CONFIG_NAME"
-sed "s|folder_path: .*|folder_path: $DATASET_PATH|" "$CONFIG_SRC" > "$CONFIG_OUT"
-echo "Config written to $CONFIG_OUT (dataset: $DATASET_PATH)"
-
 echo "[1/4] Cloning ostris/ai-toolkit (CUDA)..."
 if [ -d "$TOOLKIT_DIR/.git" ]; then
   cd "$TOOLKIT_DIR"
   git pull --ff-only || true
   git submodule update --init --recursive
 else
+  rm -rf "$TOOLKIT_DIR"
   cd "$PROJECT_ROOT"
   git clone https://github.com/ostris/ai-toolkit.git
   cd "$TOOLKIT_DIR"
@@ -39,6 +34,12 @@ else
 fi
 # Compatibility: use torch.optim.AdamW (transformers removed AdamW in v5)
 sed -i.bak 's/from transformers import Adafactor, AdamW/from transformers import Adafactor/' "$TOOLKIT_DIR/toolkit/optimizer.py" 2>/dev/null || true
+
+# Copy config and set dataset path
+mkdir -p "$TOOLKIT_DIR/config"
+CONFIG_OUT="$TOOLKIT_DIR/config/$CONFIG_NAME"
+sed "s|folder_path: .*|folder_path: $DATASET_PATH|" "$CONFIG_SRC" > "$CONFIG_OUT"
+echo "Config written to $CONFIG_OUT (dataset: $DATASET_PATH)"
 
 echo "[2/4] Creating venv and installing dependencies..."
 PYTHON="${PYTHON:-python3}"
