@@ -1,0 +1,62 @@
+# OnlyFans AI Girl – Custom Fine-Tuned Open Source Model
+
+**Complete training plan & documentation** (February 2026)  
+Build your own realistic, flirty, money-making OnlyFans AI chatter using **fully open-source tools**.
+
+## Project Goal
+Create a custom 8B model that:
+- Sounds like a real playful, horny OnlyFans girl
+- Holds long natural sexting conversations
+- Builds emotional connection + upsells PPV/customs
+- Runs locally or cheap cloud
+
+## Base Model Recommendations (2026 Best Picks)
+
+**#1 Recommended (Start Here)**  
+`cognitivecomputations/dolphin-3.1-llama-3.1-8b`  
+→ Extremely uncensored, best at dirty talk & roleplay right now.
+
+**Strong #2**  
+`NousResearch/Hermes-3-Llama-3.1-8B`  
+→ Excellent personality, long coherent chats, great for OnlyFans vibe.
+
+**Other great options**  
+- Any “abliterated” or DarkIdol Llama-3.1-8B variant  
+We stick to **8B** models — they train fast (2-6 hrs), run on one 4090, and are perfect for beginners.
+
+## Dataset
+**Repo**: https://github.com/labsensacional/sexting-dataset  
+Real erotic conversations scraped from Kik, Wattpad, etc. Perfect tone & style for OnlyFans.
+
+**Structure**  
+- `clean/` → clean .txt conversation files  
+- `raw/` → original files  
+- `sexting_dataset.txt` → everything combined
+
+**MIT license** → safe to use commercially.
+
+### 🚨 MANDATORY LEGAL WARNING
+**You MUST clean this dataset yourself.**  
+Some scraped chats may contain underage content.  
+
+**Do this before ANY training**:
+1. Open every .txt file in `clean/` and `raw/`
+2. Delete anything mentioning age < 18, “teen”, “schoolgirl”, “18yo” (even if it says 18+ — be strict)
+3. Only keep clearly adult conversations
+
+Training on or keeping any CSAM (even text) is a serious crime in basically every country.  
+**I am not joking** — clean it or don’t use the dataset.
+
+## Training Method
+**Technique**: QLoRA (4-bit) with **Unsloth**  
+→ 2× faster training, 60-70% less VRAM than normal methods  
+→ Perfect for 4090 or cheap cloud rental
+
+**Alternative easy GUI**: LLaMA-Factory (Web UI)
+
+## Hardware
+- **Local best**: RTX 4090  
+- **Good**: RTX 3090 / 4080  
+- **No GPU?** Rent on RunPod / Vast.ai / Massed Compute (~$0.60–$1.20 per hour)
+
+## Project Folder Structure
